@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Common;
 using System.IO;
 using System.Net.Http;
 
@@ -56,7 +57,40 @@ namespace TypeConsumingExamples
                 int trunctatedAmount = (int)m; // cast is redundent
             }
 
+            //using built in convert and parse methods
+            {
+                int value = Convert.ToInt32("32");
+                value = int.Parse("42");
+                bool success = int.TryParse("42", out value);
+            }
+
             Console.ReadKey();
         }
+
+
+
+        //using as and is operators
+        void LogStream(Stream stream)
+        {
+            //using is
+            {
+                MemoryStream memoryStream = stream as MemoryStream;
+                if (stream is MemoryStream)
+                {
+                    // ....
+                }
+            }
+
+            //using as
+            {
+                MemoryStream memoryStream = stream as MemoryStream;
+                if (memoryStream != null)
+                {
+                    // ....
+                }
+            }
+        }
+
     }
+
 }
