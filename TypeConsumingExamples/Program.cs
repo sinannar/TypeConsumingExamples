@@ -150,7 +150,7 @@ namespace TypeConsumingExamples
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
             result = binder.Name;
-//            result += binder.
+            //result += binder.
             return true;
         }
     }
@@ -163,4 +163,38 @@ namespace TypeConsumingExamples
         }
     }
 
+
+    /*
+     The ExpandoObject class enables you to add and delete members of its instances at run time and also to set and get values of these members. 
+     This class supports dynamic binding, which enables you to use standard syntax like sampleObject.sampleMember 
+     instead of more complex syntax like sampleObject.GetAttribute("sampleMember").
+     */
+    public class Try2
+    {
+        public static void foo()
+        {
+            dynamic sampleObject = new ExpandoObject();
+
+            sampleObject.test = "Dynamic Property";
+            Console.WriteLine(sampleObject.test);
+            Console.WriteLine(sampleObject.test.GetType());
+            // This code example produces the following output:
+            // Dynamic Property
+            // System.String
+
+            sampleObject.number = 10;
+            sampleObject.Increment = (Action)(() => { sampleObject.number++; });
+
+            // Before calling the Increment method.
+            Console.WriteLine(sampleObject.number);
+
+            sampleObject.Increment();
+
+            // After calling the Increment method.
+            Console.WriteLine(sampleObject.number);
+            // This code example produces the following output:
+            // 10
+            // 11
+        }
+    }
 }
