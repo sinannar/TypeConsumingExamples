@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Dynamic;
 using System.IO;
 using System.Net.Http;
 
@@ -137,5 +138,29 @@ namespace TypeConsumingExamples
             DisplayInExcel(entities);
         }
 
+
     }
+
+    /*
+        .Net offers two special classes for dynamic types. DynamicObject is the most flexible
+        When inheriting from DynamicObject you can override members that enable you to override operations such as getting or setting a member,calling a method etc...
+    */
+    public class SampleObject : DynamicObject
+    {
+        public override bool TryGetMember(GetMemberBinder binder, out object result)
+        {
+            result = binder.Name;
+//            result += binder.
+            return true;
+        }
+    }
+    public class Try
+    {
+        public static void foo()
+        {
+            dynamic obj = new SampleObject();
+            Console.WriteLine(obj.SomeProperty); //displays 'SomeProperty'
+        }
+    }
+
 }
